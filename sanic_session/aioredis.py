@@ -1,9 +1,10 @@
 from sanic_session.base import BaseSessionInterface
 
+
 try:
     import aioredis
-except ImportError:
-    aioredis = None
+except (ImportError, TimeoutError, TypeError):
+    from redis import asyncio as aioredis
 
 
 class AIORedisSessionInterface(BaseSessionInterface):

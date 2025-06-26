@@ -5,7 +5,7 @@ from sanic_session.base import BaseSessionInterface
 try:
     import asyncio_redis
 except ImportError:
-    asyncio_redis = None
+    from redis import asyncio as asyncio_redis
 
 
 class RedisSessionInterface(BaseSessionInterface):

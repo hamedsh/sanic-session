@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 requirements = (
     "sanic",
     "ujson",
-    "redis~=5.0"
+    "redis>=5.0.0,<6.0.0",
 )
 
 extras_require = {

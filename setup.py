@@ -7,11 +7,12 @@ with open("README.md", "r") as fh:
 requirements = (
     "sanic",
     "ujson",
+    "redis~=5"
 )
 
 extras_require = {
     "aioredis": ["aioredis>=1.0.0"],
-    "redis": ["asyncio_redis"],
+    "redis": ["asyncio_redis", "redis"],
     "mongo": ["sanic_motor", "pymongo"],
     "aiomcache": ["aiomcache>=0.5.2"],
     "dev": [

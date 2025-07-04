@@ -11,7 +11,8 @@ except ImportError:
 class RedisSessionInterface(BaseSessionInterface):
     def __init__(
         self,
-        redis_getter: Callable,
+        redis_getter: Callable = None,
+        redis = None,
         domain: str = None,
         expiry: int = 2592000,
         httponly: bool = True,
@@ -66,6 +67,7 @@ class RedisSessionInterface(BaseSessionInterface):
             )
 
         self.redis_getter = redis_getter
+        self.redis = redis
 
         super().__init__(
             expiry=expiry,
@@ -80,13 +82,13 @@ class RedisSessionInterface(BaseSessionInterface):
         )
 
     async def _get_value(self, prefix, key):
-        redis_connection = await self.redis_getter()
+        redis_connection = self.redis or await self.redis_getter()
         return await redis_connection.get(prefix + key)
 
     async def _delete_key(self, key):
-        redis_connection = await self.redis_getter()
+        redis_connection = self.redis or await self.redis_getter()
         await redis_connection.delete([key])
 
     async def _set_value(self, key, data):
-        redis_connection = await self.redis_getter()
+        redis_connection = self.redis or await self.redis_getter()
         await redis_connection.setex(key, self.expiry, data)

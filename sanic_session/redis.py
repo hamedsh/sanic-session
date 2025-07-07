@@ -85,7 +85,7 @@ class RedisSessionInterface(BaseSessionInterface):
 
     async def _delete_key(self, key):
         redis_connection = await self.redis_getter()
-        await redis_connection.delete([key])
+        await redis_connection.delete(key)
 
     async def _set_value(self, key, data):
         redis_connection = await self.redis_getter()
